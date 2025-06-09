@@ -134,6 +134,13 @@ body {
   font-weight: bold;
 }
 
+.option.selected {
+  background-color: #e0dcff;
+  border: 2px solid #6200ee;
+  font-weight: 600;
+}
+
+
 button {
   padding: 0.7rem 1.2rem;
   font-size: 1rem;
