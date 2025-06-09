@@ -1,7 +1,8 @@
+/* Updated global styles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', sans-serif;
   background: #f9f9fb;
-  padding: 2rem;
+  padding: 1rem;
   color: #333;
 }
 
@@ -12,6 +13,54 @@ body {
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive design */
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 1.2rem;
+  }
+
+  .question-text {
+    font-size: 1rem;
+  }
+
+  .option {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .btn-row {
+    text-align: center;
+  }
+
+  #progressText {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
+
+/* Optional: Centered finish button */
+#finishTestBtn {
+  background-color: #6200ee;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#finishTestBtn:hover {
+  background-color: #4b00c2;
 }
 
 .quiz-header {
