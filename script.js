@@ -22,6 +22,9 @@ const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("nextBtn");
 const resultEl = document.getElementById("result");
+const finishBtn = document.getElementById('finishTestBtn');
+
+
 
 function shuffleArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
@@ -54,6 +57,7 @@ function loadQuestion() {
   nextBtn.textContent = "Submit";
   showingFeedback = false;
   updateProgress(); // update bar
+  finishBtn.style.display = (currentQuestion === questions.length - 1) ? "block" : "none";
 }
 
 
@@ -169,12 +173,14 @@ function showResult() {
   saveScoreToHistory(score, questions.length);
   document.getElementById("quiz").style.display = "none";
   resultEl.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+  finishBtn.style.display = "none";
   displayScoreHistory();
 }
 
 // Initial call to show history on page load
 displayScoreHistory();
 
+finishBtn.style.display = "none"; // start hidden
 
 // Initial call to load first question
 loadQuestion();
