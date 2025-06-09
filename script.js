@@ -13,6 +13,7 @@ const questions = [
 
 let currentQuestion = 0;
 let score = 0;
+let showingFeedback = false;
 
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
@@ -26,23 +27,60 @@ function loadQuestion() {
 
   q.options.forEach(option => {
     const li = document.createElement("li");
-    li.innerHTML = `<label><input type="radio" name="option" value="${option}"> ${option}</label>`;
+    li.innerHTML = `
+      <label class="option">
+        <input type="radio" name="option" value="${option}"> ${option}
+      </label>`;
     optionsEl.appendChild(li);
   });
+
+  resultEl.innerHTML = ""; // Clear feedback
+  nextBtn.textContent = "Submit";
+  showingFeedback = false;
 }
 
 nextBtn.addEventListener("click", () => {
   const selected = document.querySelector("input[name='option']:checked");
-  if (!selected) return alert("Please select an option.");
+  const correct = questions[currentQuestion].answer;
 
-  const answer = selected.value;
-  if (answer === questions[currentQuestion].answer) score++;
+  if (!showingFeedback) {
+    if (!selected) return alert("Please select an option.");
 
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    loadQuestion();
+    const answer = selected.value;
+
+    // Disable all inputs
+    document.querySelectorAll("input[name='option']").forEach(input => input.disabled = true);
+
+    // Highlight correct and incorrect
+    document.querySelectorAll("input[name='option']").forEach(input => {
+      const parentLabel = input.parentElement;
+      if (input.value === correct) {
+        parentLabel.classList.add("correct");
+      }
+      if (input.checked && input.value !== correct) {
+        parentLabel.classList.add("incorrect");
+      }
+    });
+
+    // Feedback text
+    if (answer === correct) {
+      score++;
+      resultEl.innerHTML = `<p style="color: green;">✅ Correct!</p>`;
+    } else {
+      resultEl.innerHTML = `<p style="color: red;">❌ Incorrect.</p>
+                            <p>Correct Answer: <strong>${correct}</strong></p>`;
+    }
+
+    nextBtn.textContent = currentQuestion < questions.length - 1 ? "Next Question" : "See Result";
+    showingFeedback = true;
+
   } else {
-    showResult();
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
   }
 });
 
