@@ -166,3 +166,7 @@ function showResult() {
 
 // Initial call to show history on page load
 displayScoreHistory();
+
+
+// Initial call to load first question
+loadQuestion();
