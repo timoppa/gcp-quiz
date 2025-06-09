@@ -11,6 +11,9 @@ const questions = [
   }
 ];
 
+questions.sort(() => Math.random() - 0.5);
+
+
 let currentQuestion = 0;
 let score = 0;
 let showingFeedback = false;
@@ -20,12 +23,18 @@ const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("nextBtn");
 const resultEl = document.getElementById("result");
 
+function shuffleArray(arr) {
+  return arr.sort(() => Math.random() - 0.5);
+}
+
 function loadQuestion() {
   const q = questions[currentQuestion];
   questionEl.textContent = q.question;
   optionsEl.innerHTML = "";
 
-  q.options.forEach(option => {
+  const shuffledOptions = shuffleArray([...q.options]); // clone + shuffle
+
+  shuffledOptions.forEach(option => {
     const li = document.createElement("li");
     li.innerHTML = `
       <label class="option">
@@ -34,10 +43,11 @@ function loadQuestion() {
     optionsEl.appendChild(li);
   });
 
-  resultEl.innerHTML = ""; // Clear feedback
+  resultEl.innerHTML = "";
   nextBtn.textContent = "Submit";
   showingFeedback = false;
 }
+
 
 nextBtn.addEventListener("click", () => {
   const selected = document.querySelector("input[name='option']:checked");
