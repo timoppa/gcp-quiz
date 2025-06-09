@@ -27,18 +27,25 @@ function shuffleArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
 
+function updateProgress() {
+  const progressPercent = ((currentQuestion) / questions.length) * 100;
+  document.getElementById('progressBar').style.width = `${progressPercent}%`;
+  document.getElementById('progressText').textContent = `Question ${currentQuestion + 1}`;
+}
+
 function loadQuestion() {
   const q = questions[currentQuestion];
   questionEl.textContent = q.question;
   optionsEl.innerHTML = "";
 
-  const shuffledOptions = shuffleArray([...q.options]); // clone + shuffle
+  const shuffledOptions = shuffleArray([...q.options]);
 
   shuffledOptions.forEach(option => {
     const li = document.createElement("li");
     li.innerHTML = `
       <label class="option">
-        <input type="radio" name="option" value="${option}"> ${option}
+        <input type="radio" name="option" value="${option}">
+        <span>${option}</span>
       </label>`;
     optionsEl.appendChild(li);
   });
@@ -46,6 +53,7 @@ function loadQuestion() {
   resultEl.innerHTML = "";
   nextBtn.textContent = "Submit";
   showingFeedback = false;
+  updateProgress(); // update bar
 }
 
 
