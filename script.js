@@ -40,6 +40,13 @@ function loadQuestion() {
   const q = questions[currentQuestion];
   questionEl.textContent = q.question;
   optionsEl.innerHTML = "";
+  optionsEl.querySelectorAll("input[type='radio']").forEach(input => {
+  input.addEventListener('change', () => {
+    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+    input.parentElement.classList.add('selected');
+  });
+});
+
 
   const shuffledOptions = shuffleArray([...q.options]);
 
