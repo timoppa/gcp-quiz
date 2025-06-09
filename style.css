@@ -32,3 +32,20 @@ button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
 }
+
+
+/* Highlight styles */
+.option.correct {
+  background-color: #d4edda;
+  border-left: 5px solid #28a745;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.option.incorrect {
+  background-color: #f8d7da;
+  border-left: 5px solid #dc3545;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
