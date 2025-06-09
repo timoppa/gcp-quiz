@@ -40,13 +40,6 @@ function loadQuestion() {
   const q = questions[currentQuestion];
   questionEl.textContent = q.question;
   optionsEl.innerHTML = "";
-  optionsEl.querySelectorAll("input[type='radio']").forEach(input => {
-  input.addEventListener('change', () => {
-    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-    input.parentElement.classList.add('selected');
-  });
-});
-
 
   const shuffledOptions = shuffleArray([...q.options]);
 
@@ -60,17 +53,24 @@ function loadQuestion() {
     optionsEl.appendChild(li);
   });
 
+  // ✅ Now add the `.selected` logic AFTER options are rendered
+  optionsEl.querySelectorAll("input[type='radio']").forEach(input => {
+    input.addEventListener('change', () => {
+      document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+      input.parentElement.classList.add('selected');
+    });
+  });
+
   resultEl.innerHTML = "";
   nextBtn.textContent = "Submit";
   showingFeedback = false;
-  updateProgress(); // update bar
+  updateProgress();
 
   if (currentQuestion === questions.length - 1) {
     finishBtn.style.display = "block";
   } else {
     finishBtn.style.display = "none";
   }
-  
 }
 
 
