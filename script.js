@@ -57,7 +57,13 @@ function loadQuestion() {
   nextBtn.textContent = "Submit";
   showingFeedback = false;
   updateProgress(); // update bar
-  finishBtn.style.display = (currentQuestion === questions.length - 1) ? "block" : "none";
+
+  if (currentQuestion === questions.length - 1) {
+    finishBtn.style.display = "block";
+  } else {
+    finishBtn.style.display = "none";
+  }
+  
 }
 
 
