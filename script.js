@@ -94,9 +94,75 @@ nextBtn.addEventListener("click", () => {
   }
 });
 
-function showResult() {
-  document.getElementById("quiz").style.display = "none";
-  resultEl.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+
+// Save score to history in localStorage
+function saveScoreToHistory(score, total) {
+  const scoreRecord = {
+    score,
+    total,
+    date: new Date().toLocaleString()
+  };
+
+  let history = JSON.parse(localStorage.getItem('quizScoreHistory')) || [];
+  history.push(scoreRecord);
+  localStorage.setItem('quizScoreHistory', JSON.stringify(history));
 }
 
-loadQuestion();
+// Show full history above quiz
+function displayScoreHistory() {
+  const container = document.querySelector(".container");
+  let history = JSON.parse(localStorage.getItem('quizScoreHistory')) || [];
+
+  // Remove existing history display if any
+  const existingHistory = document.getElementById('scoreHistory');
+  if (existingHistory) existingHistory.remove();
+
+  if (history.length === 0) return;
+
+  // Create history table
+  const historyDiv = document.createElement('div');
+  historyDiv.id = 'scoreHistory';
+  historyDiv.innerHTML = `
+    <h3>Score History</h3>
+    <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Score</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${history.map((item, idx) => `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>${item.score} / ${item.total}</td>
+            <td>${item.date}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    <button id="clearHistoryBtn" style="margin-top: 10px;">Clear History</button>
+    <hr>
+  `;
+
+  container.insertBefore(historyDiv, document.getElementById("quiz"));
+
+  // Add clear history button event listener
+  document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+    if (confirm("Are you sure you want to clear your score history?")) {
+      localStorage.removeItem('quizScoreHistory');
+      displayScoreHistory(); // Remove history display
+    }
+  });
+}
+
+// Updated showResult to save score and show history
+function showResult() {
+  saveScoreToHistory(score, questions.length);
+  document.getElementById("quiz").style.display = "none";
+  resultEl.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+  displayScoreHistory();
+}
+
+// Initial call to show history on page load
+displayScoreHistory();
