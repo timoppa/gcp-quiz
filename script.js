@@ -4,11 +4,11 @@ const questions = [
     "options": [
       "A. Configure a new load balancer for the new version of the API",
       "B. Reconfigure old clients to use a new endpoint for the new API",
-      "Option C",
+      "C. Have the old API forward traffic to the new API based on the path",
       "D. Use separate backend pools for each API path behind the load balancer"
     ],
     "answer": [
-      "d"
+      "D. Use separate backend pools for each API path behind the load balancer"
     ],
     "multiple": false
   },
@@ -21,7 +21,7 @@ const questions = [
       "D. Stream data into Google Cloud Datastore"
     ],
     "answer": [
-      "a"
+      "A. Load data into Google BigQuery"
     ],
     "multiple": false
   },
@@ -36,7 +36,7 @@ const questions = [
       "F. Migrate from MySQL to a managed NoSQL database like Google Cloud Datastore or Bigtable"
     ],
     "answer": [
-      "c",
+      "C. Instrument the application with a monitoring tool like Stackdriver Debugger",
       "d",
       "e"
     ],
@@ -51,20 +51,20 @@ const questions = [
       "D. The HTTP Expires header needs to be set to -1 stop caching"
     ],
     "answer": [
-      "a"
+      "A. The session variable is local to just a single instance"
     ],
     "multiple": false
   },
   {
     "question": "An application development team believes their current logging tool will not meet their needs for their new cloud-based product. They want a better tool to capture errors and help them analyze their historical log data. You want to help them find a solution that meets their needs.\n\nWhat should you do?",
     "options": [
-      "A. Direct them to download and install the Google StackDriver logging agent",
+      "A. The session variable is local to just a single instance",
       "B. Send them a list of online resources about logging best practices",
       "C. Help them define their requirements and assess viable logging tools",
       "D. Help them upgrade their current tool to take advantage of any new features"
     ],
     "answer": [
-      "a"
+      "A. The session variable is local to just a single instance"
     ],
     "multiple": false
   },
@@ -78,7 +78,7 @@ const questions = [
       "E. Replace the platform's relational database systems with a NoSQL database"
     ],
     "answer": [
-      "a",
+      "A. Introduce a green-blue deployment model",
       "c"
     ],
     "multiple": true
@@ -94,8 +94,8 @@ const questions = [
       "F. Store all state in Google Cloud Storage, snapshot the persistent disks, and terminate the VM"
     ],
     "answer": [
-      "a",
-      "d"
+      "A. Use the - -no-auto-delete flag on all persistent disks and stop the VM",
+      "D. Use Google BigQuery billing export and labels to associate cost to groups"
     ],
     "multiple": true
   },
@@ -108,7 +108,7 @@ const questions = [
       "D. Blobstore"
     ],
     "answer": [
-      "b"
+      "B. NoSQL"
     ],
     "multiple": false
   },
@@ -121,7 +121,7 @@ const questions = [
       "D. Create a tag on each instance with the name of the load balancer. Configure a firewall rule with the name of the load balancer as the source and the instance tag as the destination."
     ],
     "answer": [
-      "c"
+      "C. Ensure that a firewall rule exists to allow load balancer health checks to reach the instances in the instance group."
     ],
     "multiple": false
   },
@@ -134,7 +134,7 @@ const questions = [
       "D. Install the bq component for gcloud with the command gcloud components install bq."
     ],
     "answer": [
-      "c"
+      "C. Create a new service account with BigQuery access and execute your script with that user"
     ],
     "multiple": false
   },
