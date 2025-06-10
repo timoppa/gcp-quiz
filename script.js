@@ -378,9 +378,34 @@ function displayScoreHistory() {
 function showResult() {
   saveScoreToHistory(score, questions.length);
   document.getElementById("quiz").style.display = "none";
-  resultEl.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+  resultEl.innerHTML = `
+    <h2>Your Score: ${score}/${questions.length}</h2>
+    <button id="restartQuizBtn">Restart Quiz</button>
+  `;
   finishBtn.style.display = "none";
+
   displayScoreHistory();
+
+  // ✅ Restart logic with timer reset
+  document.getElementById("restartQuizBtn").addEventListener("click", () => {
+    // Reset quiz state
+    score = 0;
+    currentQuestion = 0;
+    showingFeedback = false;
+    quizStartTime = new Date();
+
+    // Reset timer
+    clearInterval(countdownInterval);
+    totalTimeInSeconds = 90 * 60; // 1 hour 30 minutes
+    updateTimerDisplay();
+    startTimer(); // start a new countdown
+
+    // Re-shuffle and reload quiz
+    questions.sort(() => Math.random() - 0.5);
+    document.getElementById("quiz").style.display = "block";
+    resultEl.innerHTML = "";
+    loadQuestion();
+  });
 }
 
 // Initial call to show history on page load
