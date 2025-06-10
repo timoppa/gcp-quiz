@@ -197,5 +197,19 @@ button:hover {
   margin-bottom: 1.5rem;
 }
 
+#restartQuizBtn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#restartQuizBtn:hover {
+  background-color: #0056b3;
+}
 
 
