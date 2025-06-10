@@ -394,10 +394,11 @@ function displayScoreHistory() {
 function showResult() {
   saveScoreToHistory(score, questions.length);
   document.getElementById("quiz").style.display = "none";
-  resultEl.innerHTML = `
-    <h2>Your Score: ${score}/${questions.length}</h2>
-    <button id="restartQuizBtn">Restart Quiz</button>
-  `;
+  document.getElementById("finalResult").style.display = "block";
+  document.getElementById("finalResult").innerHTML = `
+      <h2>Your Score: ${score}/${questions.length}</h2>
+      <button id="restartQuizBtn" style="margin-top: 16px;">Restart Quiz</button>
+`;
   finishBtn.style.display = "none";
 
   displayScoreHistory();
@@ -419,7 +420,7 @@ function showResult() {
     // Re-shuffle and reload quiz
     questions.sort(() => Math.random() - 0.5);
     document.getElementById("quiz").style.display = "block";
-    resultEl.innerHTML = "";
+    document.getElementById("finalResult").style.display = "none";
     loadQuestion();
   });
 }
