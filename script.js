@@ -384,7 +384,7 @@ function showResult() {
 }
 
 // Initial call to show history on page load
-displayScoreHistory();
+// displayScoreHistory(); 
 
 finishBtn.style.display = "none"; // start hidden
 
