@@ -215,9 +215,17 @@ let totalTimeInSeconds = 90 * 60; // 1 hour 30 minutes = 5400 seconds
 const timerEl = document.getElementById("timer");
 
 function updateTimerDisplay() {
-  const minutes = Math.floor(totalTimeInSeconds / 60);
+  const hours = Math.floor(totalTimeInSeconds / 3600);
+  const minutes = Math.floor((totalTimeInSeconds % 3600) / 60);
   const seconds = totalTimeInSeconds % 60;
-  timerEl.textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+  let timeParts = [];
+
+  if (hours > 0) timeParts.push(`${hours} hour${hours !== 1 ? 's' : ''}`);
+  if (minutes > 0 || hours > 0) timeParts.push(`${minutes} min${minutes !== 1 ? 's' : ''}`);
+  timeParts.push(`${seconds} second${seconds !== 1 ? 's' : ''}`);
+
+  timerEl.textContent = `Time Remaining: ${timeParts.join(', ')}`;
 }
 
 const countdownInterval = setInterval(() => {
