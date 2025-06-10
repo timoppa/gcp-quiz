@@ -211,6 +211,30 @@ function loadQuestion() {
 }
 
 
+let totalTimeInSeconds = 90 * 60; // 1 hour 30 minutes = 5400 seconds
+const timerEl = document.getElementById("timer");
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(totalTimeInSeconds / 60);
+  const seconds = totalTimeInSeconds % 60;
+  timerEl.textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+const countdownInterval = setInterval(() => {
+  totalTimeInSeconds--;
+  updateTimerDisplay();
+
+  if (totalTimeInSeconds <= 0) {
+    clearInterval(countdownInterval);
+    alert("Time's up! Submitting your quiz.");
+    showResult();
+  }
+}, 1000);
+
+updateTimerDisplay(); // show initial value
+
+
+
 nextBtn.addEventListener("click", () => {
   const currentQ = questions[currentQuestion];
   const selectedInputs = Array.from(document.querySelectorAll("input[name='option']:checked"));
