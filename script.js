@@ -171,16 +171,18 @@ function loadQuestion() {
   optionsEl.innerHTML = "";
 
   const shuffledOptions = shuffleArray([...q.options]);
+  
+  const inputType = q.multiple ? "checkbox" : "radio";
 
-  shuffledOptions.forEach(option => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <label class="option">
-        <input type="radio" name="option" value="${option}">
-        <span>${option}</span>
-      </label>`;
-    optionsEl.appendChild(li);
-  });
+    shuffledOptions.forEach(option => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <label class="option">
+          <input type="${inputType}" name="option" value="${option}">
+          <span>${option}</span>
+        </label>`;
+      optionsEl.appendChild(li);
+    });
 
   // ✅ Now add the `.selected` logic AFTER options are rendered
   optionsEl.querySelectorAll("input[type='radio']").forEach(input => {
@@ -204,7 +206,14 @@ function loadQuestion() {
 
 
 nextBtn.addEventListener("click", () => {
-  const selected = document.querySelector("input[name='option']:checked");
+  const selectedInputs = Array.from(document.querySelectorAll("input[name='option']:checked"));
+    if (selectedInputs.length === 0) return alert("Please select at least one option.");
+    
+    const selectedValues = selectedInputs.map(input => input.value);
+    const correctAnswers = questions[currentQuestion].answer;
+    const isCorrect = correctAnswers.length === selectedValues.length &&
+                      correctAnswers.every(ans => selectedValues.includes(ans));
+
   const correct = questions[currentQuestion].answer;
 
   if (!showingFeedback) {
@@ -227,12 +236,12 @@ nextBtn.addEventListener("click", () => {
     });
 
     // Feedback text
-    if (answer === correct) {
+    if (isCorrect) {
       score++;
       resultEl.innerHTML = `<p style="color: green;">✅ Correct!</p>`;
     } else {
       resultEl.innerHTML = `<p style="color: red;">❌ Incorrect.</p>
-                            <p>Correct Answer: <strong>${correct}</strong></p>`;
+                            <p>Correct Answer: <strong>${correctAnswers.join(", ")}</strong></p>`;
     }
 
     nextBtn.textContent = currentQuestion < questions.length - 1 ? "Next Question" : "See Result";
