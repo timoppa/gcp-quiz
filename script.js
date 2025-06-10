@@ -206,20 +206,16 @@ function loadQuestion() {
 
 
 nextBtn.addEventListener("click", () => {
+  const currentQ = questions[currentQuestion];
   const selectedInputs = Array.from(document.querySelectorAll("input[name='option']:checked"));
-    if (selectedInputs.length === 0) return alert("Please select at least one option.");
-    
-    const selectedValues = selectedInputs.map(input => input.value);
-    const correctAnswers = questions[currentQuestion].answer;
-    const isCorrect = correctAnswers.length === selectedValues.length &&
-                      correctAnswers.every(ans => selectedValues.includes(ans));
-
-  const correct = questions[currentQuestion].answer;
+  const correctAnswers = currentQ.answer;
 
   if (!showingFeedback) {
-    if (!selected) return alert("Please select an option.");
+    if (selectedInputs.length === 0) return alert("Please select at least one option.");
 
-    const answer = selected.value;
+    const selectedValues = selectedInputs.map(input => input.value);
+    const isCorrect = correctAnswers.length === selectedValues.length &&
+                      correctAnswers.every(ans => selectedValues.includes(ans));
 
     // Disable all inputs
     document.querySelectorAll("input[name='option']").forEach(input => input.disabled = true);
@@ -227,15 +223,15 @@ nextBtn.addEventListener("click", () => {
     // Highlight correct and incorrect
     document.querySelectorAll("input[name='option']").forEach(input => {
       const parentLabel = input.parentElement;
-      if (input.value === correct) {
+      if (correctAnswers.includes(input.value)) {
         parentLabel.classList.add("correct");
       }
-      if (input.checked && input.value !== correct) {
+      if (input.checked && !correctAnswers.includes(input.value)) {
         parentLabel.classList.add("incorrect");
       }
     });
 
-    // Feedback text
+    // Feedback
     if (isCorrect) {
       score++;
       resultEl.innerHTML = `<p style="color: green;">✅ Correct!</p>`;
