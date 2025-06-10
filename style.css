@@ -183,3 +183,19 @@ button:hover {
   background-color: #4b00c2;
 }
 
+#timer {
+  font-size: 0.95rem;
+  color: #333;
+  margin-top: 0.3rem;
+}
+
+.quiz-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+
+
