@@ -146,6 +146,7 @@ questions.sort(() => Math.random() - 0.5);
 let currentQuestion = 0;
 let score = 0;
 let showingFeedback = false;
+let quizStartTime = new Date();
 
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
@@ -291,13 +292,31 @@ nextBtn.addEventListener("click", () => {
   }
 });
 
+function formatDuration(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+
+  const parts = [];
+  if (h > 0) parts.push(`${h}h`);
+  if (m > 0 || h > 0) parts.push(`${m}m`);
+  parts.push(`${s}s`);
+
+  return parts.join(' ');
+}
+
 
 // Save score to history in localStorage
 function saveScoreToHistory(score, total) {
+  const endTime = new Date();
+  const durationInSeconds = Math.floor((endTime - quizStartTime) / 1000);
+  const duration = formatDuration(durationInSeconds);
+
   const scoreRecord = {
     score,
     total,
-    date: new Date().toLocaleString()
+    date: endTime.toLocaleString(),
+    duration
   };
 
   let history = JSON.parse(localStorage.getItem('quizScoreHistory')) || [];
@@ -326,6 +345,7 @@ function displayScoreHistory() {
         <tr>
           <th>#</th>
           <th>Score</th>
+          <th>Time Taken</th>
           <th>Date</th>
         </tr>
       </thead>
@@ -334,6 +354,7 @@ function displayScoreHistory() {
           <tr>
             <td>${idx + 1}</td>
             <td>${item.score} / ${item.total}</td>
+            <td>${item.duration || '-'}</td>
             <td>${item.date}</td>
           </tr>`).join('')}
       </tbody>
