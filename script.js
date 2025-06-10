@@ -202,6 +202,12 @@ function loadQuestion() {
   } else {
     finishBtn.style.display = "none";
   }
+
+    if (currentQuestion >= 1) {
+      finishBtn.style.display = "block";
+    } else {
+      finishBtn.style.display = "none";
+    }
 }
 
 
