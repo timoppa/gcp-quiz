@@ -229,7 +229,23 @@ function updateTimerDisplay() {
   timerEl.textContent = `Time Remaining: ${timeParts.join(', ')}`;
 }
 
-const countdownInterval = setInterval(() => {
+
+function startTimer() {
+  countdownInterval = setInterval(() => {
+    totalTimeInSeconds--;
+    updateTimerDisplay();
+
+    if (totalTimeInSeconds <= 0) {
+      clearInterval(countdownInterval);
+      alert("Time's up! Submitting your quiz.");
+      showResult();
+    }
+  }, 1000);
+}
+
+
+
+let countdownInterval = setInterval(() => {
   totalTimeInSeconds--;
   updateTimerDisplay();
 
@@ -412,6 +428,8 @@ function showResult() {
 // displayScoreHistory(); 
 
 finishBtn.style.display = "none"; // start hidden
+
+startTimer();
 
 // Initial call to load first question
 loadQuestion();
